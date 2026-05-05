@@ -73,8 +73,10 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 80% -10%, rgba(184, 235, 35, 0.08), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 10% 100%, rgba(184, 235, 35, 0.05), transparent 60%);
+    radial-gradient(ellipse 70% 50% at 95% -5%, rgba(184, 235, 35, 0.28), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 5% 105%, rgba(184, 235, 35, 0.22), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 0% 0%, rgba(184, 235, 35, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(184, 235, 35, 0.14), transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -332,170 +334,55 @@ section { padding: var(--section-pad) 0; position: relative; }
   50% { opacity: 0.4; }
 }
 
-/* Hero visual: mock billboard */
+/* ====================================================
+   BILLBOARD LED — Imagen real con resplandor verde
+   ==================================================== */
 .hero-visual {
   position: relative;
-  aspect-ratio: 4/5;
+  aspect-ratio: 700/589;
   opacity: 0;
   animation: rise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.billboard {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  border: 1px solid var(--border-strong);
-  box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.6),
-    0 0 120px rgba(184, 235, 35, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
-.billboard::before {
+/* Resplandor verde ambient detrás del billboard */
+.hero-visual::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 5%;
+  left: 5%;
+  right: 5%;
+  height: 65%;
   background:
-    radial-gradient(circle at 30% 30%, rgba(184, 235, 35, 0.4), transparent 50%),
-    radial-gradient(circle at 70% 70%, rgba(184, 235, 35, 0.15), transparent 50%);
-  filter: blur(40px);
-  opacity: 0.6;
-}
-
-.billboard-screen {
-  position: absolute;
-  inset: 24px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 28px;
-  overflow: hidden;
-}
-
-.billboard-screen::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -10%;
-  width: 60%; height: 80%;
-  background: radial-gradient(ellipse, rgba(184, 235, 35, 0.3), transparent 70%);
+    radial-gradient(ellipse 70% 60% at 55% 45%,
+      rgba(184, 235, 35, 0.32),
+      transparent 65%);
   filter: blur(60px);
-  animation: drift 12s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+  animation: ambientPulse 4s ease-in-out infinite;
 }
 
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(40%, 30%); }
+@keyframes ambientPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
 }
 
-.billboard-tag {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* La imagen del billboard */
+.billboard-image {
   position: relative;
-  z-index: 2;
-}
-
-.billboard-tag::before {
-  content: '';
-  width: 8px; height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-.billboard-headline {
-  font-family: var(--display);
-  font-size: clamp(1.5rem, 3vw, 2.4rem);
-  text-transform: uppercase;
-  line-height: 0.95;
-  position: relative;
-  z-index: 2;
-}
-.billboard-headline .hl { color: var(--accent); }
-
-.billboard-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  position: relative;
-  z-index: 2;
-}
-
-.billboard-qr {
-  width: 56px; height: 56px;
-  background: var(--text);
-  border-radius: 8px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 2px;
-  padding: 4px;
-}
-.billboard-qr span {
-  background: #000;
-  border-radius: 1px;
-}
-.billboard-qr span:nth-child(3n) { background: transparent; }
-.billboard-qr span:nth-child(5n) { background: transparent; }
-
-.billboard-stats {
-  text-align: right;
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.billboard-stats strong {
+  width: 100%;
+  height: auto;
   display: block;
-  font-family: var(--display);
-  font-size: 1.4rem;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-
-/* Floating chips around billboard */
-.chip {
-  position: absolute;
-  padding: 10px 16px;
-  background: rgba(10, 10, 10, 0.7);
-  border: 1px solid var(--border-strong);
-  backdrop-filter: blur(20px);
-  border-radius: 100px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 3;
-}
-.chip::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-}
-.chip-1 { top: 10%; left: -8%; animation: float 6s ease-in-out infinite; }
-.chip-2 { bottom: 18%; right: -6%; animation: float 7s ease-in-out 1s infinite; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  z-index: 2;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
 }
 
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-  .hero-visual { aspect-ratio: 4/4; max-width: 480px; margin: 0 auto; }
+  .hero-visual { max-width: 560px; margin: 0 auto; }
 }
 
 /* ==========================================================
@@ -1011,27 +898,7 @@ footer {
     </div>
 
     <div class="hero-visual">
-      <div class="chip chip-1">En vivo</div>
-      <div class="chip chip-2">Verificado</div>
-      <div class="billboard">
-        <div class="billboard-screen">
-          <span class="billboard-tag">Live · Centro · 2:14 PM</span>
-          <h2 class="billboard-headline">Tu marca <span class="hl">aquí.</span><br>Hoy mismo.</h2>
-          <div class="billboard-meta">
-            <div class="billboard-qr">
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="billboard-stats">
-              <strong>2.4K</strong>
-              vistas/hora
-            </div>
-          </div>
-        </div>
-      </div>
+      <img src="billboard.png" alt="Pantalla LED publicitaria de BannerBlaze mostrando: TU MARCA AQUÍ. HOY MISMO." class="billboard-image" />
     </div>
   </div>
 </section>
