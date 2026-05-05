@@ -12,6 +12,16 @@
 <meta property="og:description" content="La ciudad mira. Nosotros hacemos que se detenga." />
 <meta property="og:type" content="website" />
 
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="shortcut icon" href="favicon.ico" />
+
+<!-- Tally embed (formulario de contacto) -->
+<script async src="https://tally.so/widgets/embed.js"></script>
+
 <!-- Fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -979,7 +989,7 @@ footer {
       <li><a href="#contacto">Contacto</a></li>
     </ul>
   </nav>
-  <a href="#contacto" class="btn btn-primary nav-cta">Comenzar</a>
+  <a href="#" class="btn btn-primary nav-cta" data-action="open-form">Comenzar</a>
 </header>
 
 <main>
@@ -994,7 +1004,7 @@ footer {
       <h1>La ciudad mira.<br>Nosotros hacemos<br>que <span class="accent">se detenga.</span></h1>
       <p class="hero-sub">Pantallas digitales en puntos estratégicos. Contenido interactivo que llega al celular en un toque. Cada anuncio verificado antes de salir al aire.</p>
       <div class="hero-cta">
-        <a href="#contacto" class="btn btn-primary">Comenzar ahora <span class="arrow">→</span></a>
+        <a href="#" class="btn btn-primary" data-action="open-form">Comenzar ahora <span class="arrow">→</span></a>
         <a href="#como-funciona" class="btn btn-ghost">Ver cómo funciona</a>
       </div>
       <span class="hero-micro">Sin contratos eternos · Sin producción costosa · Sin sorpresas</span>
@@ -1271,8 +1281,8 @@ footer {
     <h2 style="margin-top: 24px;">La ciudad está esperando<br><span class="accent">tu mensaje.</span></h2>
     <p>Empieza con una conversación. Sin compromiso, sin formularios largos. Te respondemos en menos de 24 horas.</p>
     <div class="hero-cta">
-      <a href="mailto:hola@bannerblaze.com" class="btn btn-primary">Comenzar ahora <span class="arrow">→</span></a>
-      <a href="#" class="btn btn-ghost">Hablar con el equipo</a>
+      <a href="#" class="btn btn-primary" data-action="open-form">Comenzar ahora <span class="arrow">→</span></a>
+      <a href="#" class="btn btn-ghost" data-action="open-form">Hablar con el equipo</a>
     </div>
   </div>
 </section>
@@ -1296,20 +1306,20 @@ footer {
         <ul>
           <li><a href="#como-funciona">Cómo funciona</a></li>
           <li><a href="#para-quien">Para quién</a></li>
-          <li><a href="#">Verificación</a></li>
+          <li><a href="#" data-action="open-form">Verificación</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h5>Empresa</h5>
         <ul>
-          <li><a href="#">Sobre nosotros</a></li>
-          <li><a href="#">Manifiesto</a></li>
-          <li><a href="#">Aliados</a></li>
+          <li><a href="#" data-soon="Sobre nosotros">Sobre nosotros</a></li>
+          <li><a href="#" data-soon="Manifiesto">Manifiesto</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
         <ul>
+          <li><a href="#" data-action="open-form">Comenzar ahora</a></li>
           <li><a href="mailto:hola@bannerblaze.com">hola@bannerblaze.com</a></li>
           <li><a href="#">Medellín, Colombia</a></li>
         </ul>
@@ -1323,6 +1333,40 @@ footer {
 </footer>
 
 <script>
+  // ============================================================
+  // CONFIGURACIÓN DE TALLY (formulario de contacto)
+  // Reemplaza 'TU_FORM_ID' con el ID que te da Tally al crear el form
+  // Ejemplo: si tu URL es https://tally.so/r/wQXOkB, el ID es 'wQXOkB'
+  // ============================================================
+  const TALLY_FORM_ID = '68ryP5';
+
+  // Conecta todos los botones con data-action="open-form" al modal de Tally
+  document.querySelectorAll('[data-action="open-form"]').forEach(btn => {
+    btn.setAttribute('data-tally-open', TALLY_FORM_ID);
+    btn.setAttribute('data-tally-layout', 'modal');
+    btn.setAttribute('data-tally-width', '500');
+    btn.setAttribute('data-tally-overlay', '1');
+    btn.setAttribute('data-tally-emoji-text', '👋');
+    btn.setAttribute('data-tally-emoji-animation', 'wave');
+
+    // Si Tally no está configurado todavía, mostrar mailto como fallback
+    btn.addEventListener('click', function(e) {
+      if (TALLY_FORM_ID === 'TU_FORM_ID') {
+        e.preventDefault();
+        window.location.href = 'mailto:hola@bannerblaze.com?subject=Quiero%20comenzar%20con%20BannerBlaze';
+      }
+    });
+  });
+
+  // Manejo de links "Próximamente" (Sobre nosotros, Manifiesto)
+  document.querySelectorAll('[data-soon]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const section = this.getAttribute('data-soon');
+      alert(`${section} estará disponible muy pronto.\n\nMientras tanto, escríbenos a hola@bannerblaze.com y con gusto te contamos más sobre BannerBlaze.`);
+    });
+  });
+
   // Scroll reveal con IntersectionObserver
   const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
   const io = new IntersectionObserver((entries) => {
