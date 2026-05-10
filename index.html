@@ -254,7 +254,7 @@ section { padding: var(--section-pad) 0; position: relative; }
 }
 
 /* ==========================================================
-   HERO — Cinematográfico con stats
+   HERO
    ========================================================== */
 .hero {
   min-height: 100vh;
@@ -266,74 +266,13 @@ section { padding: var(--section-pad) 0; position: relative; }
   overflow: hidden;
 }
 
-/* Background atmosférico de ciudad nocturna (sin imagen externa) */
-.city-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-/* Luces de la ciudad - puntos de luz dispersos */
-.city-lights {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle 1px at 15% 60%, rgba(255, 200, 100, 0.6), transparent),
-    radial-gradient(circle 1.5px at 25% 70%, rgba(255, 220, 150, 0.5), transparent),
-    radial-gradient(circle 1px at 35% 65%, rgba(255, 180, 80, 0.7), transparent),
-    radial-gradient(circle 2px at 55% 75%, rgba(255, 220, 150, 0.4), transparent),
-    radial-gradient(circle 1.5px at 70% 68%, rgba(255, 200, 100, 0.6), transparent),
-    radial-gradient(circle 1px at 85% 72%, rgba(255, 180, 80, 0.5), transparent),
-    radial-gradient(circle 2px at 92% 65%, rgba(255, 220, 150, 0.4), transparent),
-    radial-gradient(circle 1px at 8% 75%, rgba(255, 200, 100, 0.5), transparent),
-    radial-gradient(circle 1px at 45% 80%, rgba(255, 180, 80, 0.6), transparent),
-    radial-gradient(circle 1.5px at 62% 82%, rgba(255, 220, 150, 0.4), transparent);
-  opacity: 0.7;
-  animation: cityFlicker 8s ease-in-out infinite;
-}
-
-@keyframes cityFlicker {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 0.5; }
-}
-
-/* Tráfico - líneas de luz horizontales tipo long exposure */
-.city-traffic {
-  position: absolute;
-  bottom: 8%;
-  left: 0;
-  right: 0;
-  height: 100px;
-  background:
-    linear-gradient(90deg, transparent 0%, rgba(255, 100, 50, 0.15) 30%, rgba(255, 150, 80, 0.2) 50%, rgba(255, 100, 50, 0.15) 70%, transparent 100%),
-    linear-gradient(90deg, transparent 5%, rgba(184, 235, 35, 0.12) 25%, rgba(184, 235, 35, 0.15) 50%, rgba(184, 235, 35, 0.12) 75%, transparent 95%);
-  filter: blur(8px);
-  opacity: 0.6;
-}
-
-/* Niebla / atmósfera - capa de profundidad */
-.city-fog {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(184, 235, 35, 0.08), transparent 70%),
-    radial-gradient(ellipse 80% 50% at 50% 80%, rgba(20, 20, 40, 0.4), transparent 60%);
-  pointer-events: none;
-}
-
-/* Layout principal del hero - 3 columnas */
-.hero-layout {
+.hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1.05fr 0.45fr;
-  gap: 32px;
+  grid-template-columns: 0.95fr 1.15fr;
+  gap: 24px;
   align-items: center;
-  position: relative;
-  z-index: 2;
 }
 
-/* Animación de entrada */
 .hero-content > * {
   opacity: 0;
   transform: translateY(20px);
@@ -351,18 +290,14 @@ section { padding: var(--section-pad) 0; position: relative; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.hero h1 {
-  margin: 24px 0 28px;
-  font-size: clamp(2.2rem, 5.5vw, 4.5rem);
-}
+.hero h1 { margin: 24px 0 28px; }
 .hero h1 .accent { color: var(--accent); }
 
 .hero-sub {
-  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
-  max-width: 480px;
-  margin-bottom: 32px;
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  max-width: 540px;
+  margin-bottom: 36px;
   color: var(--text-dim);
-  line-height: 1.6;
 }
 
 .hero-cta {
@@ -373,7 +308,7 @@ section { padding: var(--section-pad) 0; position: relative; }
 }
 
 .hero-micro {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--text-mute);
   display: flex;
   align-items: center;
@@ -387,13 +322,14 @@ section { padding: var(--section-pad) 0; position: relative; }
   box-shadow: 0 0 12px var(--accent);
   animation: pulse 2s ease-in-out infinite;
 }
-
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
 
-/* Visual: imagen del billboard */
+/* ====================================================
+   BILLBOARD LED — Imagen real con resplandor verde
+   ==================================================== */
 .hero-visual {
   position: relative;
   aspect-ratio: 700/589;
@@ -404,164 +340,319 @@ section { padding: var(--section-pad) 0; position: relative; }
   justify-content: center;
 }
 
-.billboard-image {
+/* ==========================================================
+   COMPOSICIÓN ABSTRACTA — Pantalla virtual flotante
+   ========================================================== */
+
+/* Resplandor verde ambient detrás del stack */
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background:
+    radial-gradient(ellipse 70% 60% at 55% 45%,
+      rgba(184, 235, 35, 0.28),
+      transparent 65%);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+  animation: ambientPulse 4s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Stack contenedor */
+.screen-stack {
   position: relative;
   width: 100%;
-  height: auto;
-  display: block;
+  aspect-ratio: 4/3.4;
   z-index: 1;
-  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.7));
-  transform: scale(1.18);
-  transform-origin: center;
 }
 
-/* Stats laterales - columna derecha */
-.hero-stats {
+/* Grid decorativo de fondo */
+.grid-decoration {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(184, 235, 35, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 235, 35, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at center, black 30%, transparent 80%);
+  z-index: 0;
+}
+
+/* Pantalla virtual principal */
+.virtual-screen {
+  position: absolute;
+  background: linear-gradient(145deg, #0d0d0d 0%, #060606 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(184, 235, 35, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  position: relative;
-  z-index: 3;
-  opacity: 0;
-  animation: rise 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.7s forwards;
 }
 
-.stats-label {
+.main-screen {
+  top: -4%;
+  left: 8%;
+  right: 8%;
+  bottom: 30%;
+  z-index: 2;
+  animation: floatScreen 6s ease-in-out infinite;
+}
+
+@keyframes floatScreen {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Header de la pantalla */
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent);
+  animation: blinkDot 1.8s ease-in-out infinite;
+}
+
+@keyframes blinkDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.screen-meta {
   font-family: var(--body);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.25em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
   text-transform: uppercase;
+}
+
+/* Contenido principal */
+.screen-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+}
+
+.screen-tag {
+  font-family: var(--body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
   color: var(--accent);
-  padding: 6px 12px;
+  padding: 6px 14px;
   border: 1px solid rgba(184, 235, 35, 0.3);
   border-radius: 100px;
-  align-self: flex-start;
   background: rgba(184, 235, 35, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  margin-bottom: 18px;
 }
 
-.stats-list {
-  list-style: none;
+.screen-title {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.screen-title .hl {
+  color: var(--accent);
+}
+
+.screen-pulse {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 0 12px var(--accent);
+  animation: pulseLine 2.4s ease-in-out infinite;
+}
+
+@keyframes pulseLine {
+  0%, 100% { width: 60px; opacity: 0.6; }
+  50% { width: 100px; opacity: 1; }
+}
+
+/* Footer con stats */
+.screen-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.screen-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 28px;
+}
+
+.screen-bars span {
+  width: 4px;
+  height: var(--h);
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.5;
+  animation: barPulse 1.8s ease-in-out infinite;
+}
+
+.screen-bars span:nth-child(1) { animation-delay: 0s; }
+.screen-bars span:nth-child(2) { animation-delay: 0.15s; }
+.screen-bars span:nth-child(3) { animation-delay: 0.3s; }
+.screen-bars span:nth-child(4) { animation-delay: 0.45s; }
+.screen-bars span:nth-child(5) { animation-delay: 0.6s; }
+.screen-bars span:nth-child(6) { animation-delay: 0.75s; }
+.screen-bars span:nth-child(7) { animation-delay: 0.9s; }
+
+@keyframes barPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+.screen-stat {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 0;
+  align-items: flex-end;
+  font-family: var(--display);
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1;
 }
 
-.stat-item {
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  grid-template-rows: auto auto;
-  gap: 4px 14px;
+.screen-stat small {
+  font-family: var(--body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Cards flotantes */
+.floating-card {
+  position: absolute;
+  display: flex;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-  position: relative;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(15, 15, 15, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5);
+  z-index: 3;
 }
 
-.stat-item:last-child { border-bottom: none; }
+.card-verify {
+  top: 12%;
+  right: -2%;
+  animation: floatCard1 5s ease-in-out infinite;
+}
 
-.stat-icon {
-  grid-row: 1 / span 2;
-  width: 36px;
-  height: 36px;
+.card-interact {
+  bottom: 22%;
+  left: -4%;
+  animation: floatCard2 5.5s ease-in-out infinite;
+}
+
+@keyframes floatCard1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-1deg); }
+}
+
+@keyframes floatCard2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(8px) rotate(1deg); }
+}
+
+.card-icon {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(184, 235, 35, 0.12);
+  border: 1px solid rgba(184, 235, 35, 0.25);
+  border-radius: 50%;
   color: var(--accent);
-  border-radius: 10px;
-  background: rgba(184, 235, 35, 0.08);
-  border: 1px solid rgba(184, 235, 35, 0.2);
+  flex-shrink: 0;
 }
-.stat-icon svg { width: 18px; height: 18px; }
+.card-icon svg { width: 16px; height: 16px; }
 
-.stat-value {
-  font-family: var(--display);
-  font-size: 1.6rem;
-  letter-spacing: -0.02em;
-  line-height: 1;
+.card-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.card-text strong {
+  font-family: var(--body);
+  font-size: 0.8rem;
+  font-weight: 700;
   color: var(--text);
 }
 
-.stat-desc {
-  font-size: 0.7rem;
-  color: var(--text-dim);
+.card-text small {
+  font-family: var(--body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-mute);
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-weight: 600;
-  line-height: 1.35;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1100px) {
-  .hero-layout {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-  .hero-stats {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 40px;
-    padding-top: 40px;
-    border-top: 1px solid var(--border);
-  }
-  .stats-label {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 12px;
-  }
-  .stats-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 24px;
-    justify-content: space-between;
-    width: 100%;
-  }
-  .stat-item {
-    border-bottom: none;
-    flex: 1;
-    min-width: 140px;
-    padding: 0;
-  }
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .hero-visual { max-width: 520px; margin: 0 auto; }
+  .screen-stack { aspect-ratio: 4/3.2; }
 }
 
-@media (max-width: 760px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-  .hero-visual {
-    max-width: 520px;
-    margin: 0 auto;
-    aspect-ratio: 700/589;
-  }
-  .stats-list {
-    grid-template-columns: 1fr 1fr;
-    display: grid;
-    gap: 18px;
-  }
-  .stat-item {
-    flex: none;
-    min-width: 0;
-  }
-  .stat-value {
-    font-size: 1.4rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-stats {
-    margin-top: 32px;
-    padding-top: 32px;
-  }
-  .stats-list {
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
+@media (max-width: 540px) {
+  .card-verify { top: 8%; right: 4%; padding: 8px 12px; }
+  .card-interact { bottom: 24%; left: 0; padding: 8px 12px; }
+  .card-text strong { font-size: 0.7rem; }
+  .card-text small { font-size: 0.6rem; }
+  .card-icon { width: 26px; height: 26px; }
+  .card-icon svg { width: 14px; height: 14px; }
 }
 
 /* ==========================================================
@@ -1064,19 +1155,11 @@ footer {
      HERO
      =========================================================== -->
 <section class="hero">
-  <!-- Background atmosférico de ciudad nocturna -->
-  <div class="city-backdrop">
-    <div class="city-lights"></div>
-    <div class="city-traffic"></div>
-    <div class="city-fog"></div>
-  </div>
-
-  <div class="container hero-layout">
-    <!-- Texto izquierda -->
+  <div class="container hero-grid">
     <div class="hero-content">
       <span class="eyebrow">Publicidad digital exterior · Medellín</span>
       <h1>La ciudad mira.<br>Nosotros hacemos<br>que <span class="accent">se detenga.</span></h1>
-      <p class="hero-sub">Impacto real. Audiencias reales. Resultados reales. Transformamos espacios públicos en experiencias que conectan, inspiran y convierten.</p>
+      <p class="hero-sub">Pantallas digitales en puntos estratégicos. Contenido interactivo que llega al celular en un toque. Cada anuncio verificado antes de salir al aire.</p>
       <div class="hero-cta">
         <a href="#" class="btn btn-primary" data-action="open-form">Comenzar ahora <span class="arrow">→</span></a>
         <a href="#como-funciona" class="btn btn-ghost">Ver cómo funciona</a>
@@ -1084,57 +1167,66 @@ footer {
       <span class="hero-micro">Sin contratos eternos · Sin producción costosa · Sin sorpresas</span>
     </div>
 
-    <!-- Billboard centro -->
     <div class="hero-visual">
-      <img src="billboard.png" alt="Pantalla LED publicitaria de BannerBlaze" class="billboard-image" />
-    </div>
+      <!-- Composición abstracta: pantalla virtual flotante con datos en vivo -->
+      <div class="screen-stack">
+        <!-- Pantalla principal -->
+        <div class="virtual-screen main-screen">
+          <div class="screen-header">
+            <span class="status-dot"></span>
+            <span class="screen-meta">LIVE · MEDELLÍN · 14:32</span>
+          </div>
+          <div class="screen-content">
+            <span class="screen-tag">TU MARCA</span>
+            <h3 class="screen-title">AQUÍ.<br><span class="hl">HOY.</span></h3>
+            <div class="screen-pulse"></div>
+          </div>
+          <div class="screen-footer">
+            <div class="screen-bars">
+              <span style="--h: 30%"></span>
+              <span style="--h: 60%"></span>
+              <span style="--h: 45%"></span>
+              <span style="--h: 80%"></span>
+              <span style="--h: 55%"></span>
+              <span style="--h: 70%"></span>
+              <span style="--h: 90%"></span>
+            </div>
+            <span class="screen-stat">+2.4K<small>vistas/h</small></span>
+          </div>
+        </div>
 
-    <!-- Stats derecha -->
-    <aside class="hero-stats">
-      <span class="stats-label">Proyección 2026</span>
-      <ul class="stats-list">
-        <li class="stat-item">
-          <span class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          </span>
-          <span class="stat-value">+50K</span>
-          <span class="stat-desc">miradas mensuales<br>proyectadas</span>
-        </li>
-        <li class="stat-item">
-          <span class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-          </span>
-          <span class="stat-value">20+</span>
-          <span class="stat-desc">puntos<br>estratégicos</span>
-        </li>
-        <li class="stat-item">
-          <span class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-              <polyline points="16 7 22 7 22 13"/>
-            </svg>
-          </span>
-          <span class="stat-value">+30%</span>
-          <span class="stat-desc">recordación<br>de marca</span>
-        </li>
-        <li class="stat-item">
-          <span class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Card flotante: verificación -->
+        <div class="floating-card card-verify">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
               <path d="m9 12 2 2 4-4"/>
             </svg>
-          </span>
-          <span class="stat-value">100%</span>
-          <span class="stat-desc">contenido<br>verificado</span>
-        </li>
-      </ul>
-    </aside>
+          </div>
+          <div class="card-text">
+            <strong>Verificado</strong>
+            <small>Contenido real</small>
+          </div>
+        </div>
+
+        <!-- Card flotante: interacción -->
+        <div class="floating-card card-interact">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2.5"/>
+              <line x1="12" y1="18" x2="12" y2="18"/>
+            </svg>
+          </div>
+          <div class="card-text">
+            <strong>Escaneado</strong>
+            <small>+12 toques/min</small>
+          </div>
+        </div>
+
+        <!-- Grid de fondo decorativo -->
+        <div class="grid-decoration"></div>
+      </div>
+    </div>
   </div>
 </section>
 
