@@ -1271,11 +1271,246 @@ footer {
   .ticker-track { animation: none; }
   .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
 }
+
+/* ==========================================================
+   CUSTOM CURSOR
+   ========================================================== */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+  transition: transform 0.1s ease, opacity 0.3s;
+}
+.cursor-ring {
+  position: fixed;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(184, 235, 35, 0.45);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s, opacity 0.3s;
+}
+.cursor-ring.is-hovered {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(184, 235, 35, 0.85);
+}
+.cursor-dot.is-clicked { transform: translate(-50%, -50%) scale(0.45); }
+@media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+/* ==========================================================
+   MOBILE MENU
+   ========================================================== */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px;
+  background: none;
+  border: none;
+  z-index: 200;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+.nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (max-width: 768px) { .nav-hamburger { display: flex; } }
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.97);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.mobile-menu.is-open { opacity: 1; pointer-events: all; }
+.mobile-menu a {
+  font-family: var(--display);
+  font-size: clamp(2rem, 10vw, 3.5rem);
+  color: var(--text);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: color 0.3s, opacity 0.4s ease, transform 0.4s ease;
+}
+.mobile-menu.is-open a { opacity: 1; transform: translateY(0); }
+.mobile-menu.is-open a:nth-child(1) { transition-delay: 0.04s; }
+.mobile-menu.is-open a:nth-child(2) { transition-delay: 0.09s; }
+.mobile-menu.is-open a:nth-child(3) { transition-delay: 0.14s; }
+.mobile-menu.is-open a:nth-child(4) { transition-delay: 0.19s; }
+.mobile-menu.is-open a:nth-child(5) { transition-delay: 0.24s; }
+.mobile-menu a:hover { color: var(--accent); }
+.mobile-menu .mobile-cta-btn {
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 8px;
+  padding: 14px 36px;
+  background: var(--accent);
+  color: #000;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.4s ease 0.24s, transform 0.4s ease 0.24s, background 0.3s;
+}
+.mobile-menu.is-open .mobile-cta-btn { opacity: 1; transform: translateY(0); }
+.mobile-menu .mobile-cta-btn:hover { background: #c8f53a; color: #000; }
+
+/* ==========================================================
+   HERO PARTICLES CANVAS
+   ========================================================== */
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+/* ==========================================================
+   SCROLL HINT
+   ========================================================== */
+.scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: hintFadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 2s forwards;
+  pointer-events: none;
+  z-index: 5;
+}
+@keyframes hintFadeIn { to { opacity: 0.45; } }
+.scroll-hint-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-mute);
+}
+.scroll-hint-track {
+  width: 1px;
+  height: 44px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.scroll-hint-track::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: scrollDrop 2.2s ease-in-out infinite;
+}
+@keyframes scrollDrop { 0% { top: -50%; } 100% { top: 130%; } }
+@media (max-width: 768px) { .scroll-hint { display: none; } }
+
+/* ==========================================================
+   ACTIVE NAV LINKS
+   ========================================================== */
+.nav-links a { position: relative; padding-bottom: 3px; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 1.5px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 0 6px rgba(184, 235, 35, 0.5);
+}
+.nav-links a.active { color: var(--text); }
+.nav-links a.active::after { transform: scaleX(1); }
+
+/* ==========================================================
+   ENHANCED GLASS HOVER GLOW
+   ========================================================== */
+.glass {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s,
+              background 0.3s,
+              box-shadow 0.4s;
+}
+.glass:hover {
+  box-shadow:
+    0 0 0 1px rgba(184, 235, 35, 0.2),
+    0 24px 64px -20px rgba(0,0,0,0.7),
+    0 0 48px -18px rgba(184, 235, 35, 0.07);
+}
+
+/* ==========================================================
+   SCRAMBLE CHAR STYLE
+   ========================================================== */
+.scramble-char { color: var(--accent); }
+
+/* ==========================================================
+   REVEAL SCALE VARIANT
+   ========================================================== */
+.reveal-scale {
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  transition: opacity 0.85s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal-scale.in-view { opacity: 1; transform: translateY(0) scale(1); }
+
+/* ==========================================================
+   SECTION HEAD ACCENT LINE
+   ========================================================== */
+.section-head h2 {
+  position: relative;
+}
 </style>
 </head>
 
 <body>
 <div id="scrollProgress" class="scroll-progress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- ===========================================================
      NAV
@@ -1292,8 +1527,20 @@ footer {
       <li><a href="manifiesto.html">Manifiesto</a></li>
     </ul>
   </nav>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
   <a href="#" class="btn btn-primary nav-cta" data-action="open-form">Comenzar</a>
 </header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+  <a href="#producto">Producto</a>
+  <a href="#como-funciona">Cómo funciona</a>
+  <a href="sobre-nosotros.html">Sobre nosotros</a>
+  <a href="manifiesto.html">Manifiesto</a>
+  <a href="#" class="mobile-cta-btn" data-action="open-form">Comenzar ahora</a>
+</div>
 
 <main>
 
@@ -1301,6 +1548,7 @@ footer {
      HERO
      =========================================================== -->
 <section class="hero">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
   <div class="container hero-grid">
     <div class="hero-content">
       <span class="eyebrow">Publicidad digital exterior · Medellín</span>
@@ -1375,6 +1623,11 @@ footer {
     </div>
   </div>
 </section>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span class="scroll-hint-label">Scroll</span>
+    <div class="scroll-hint-track"></div>
+  </div>
 
 <!-- TICKER -->
 <div class="ticker-section" aria-hidden="true">
@@ -1848,6 +2101,231 @@ footer {
     }
     lastScroll = y;
   }, { passive: true });
+
+  // ============================================================
+  // CUSTOM CURSOR
+  // ============================================================
+  (function() {
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    if (!dot || !ring) return;
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    if (isTouch) return;
+
+    let mx = -100, my = -100, rx = -100, ry = -100;
+    let raf;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+    }, { passive: true });
+
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      raf = requestAnimationFrame(animRing);
+    }
+    raf = requestAnimationFrame(animRing);
+
+    document.addEventListener('mousedown', () => dot.classList.add('is-clicked'));
+    document.addEventListener('mouseup',   () => dot.classList.remove('is-clicked'));
+
+    const hoverEls = 'a, button, .btn, .glass, label, [data-action]';
+    document.querySelectorAll(hoverEls).forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('is-hovered'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('is-hovered'));
+    });
+  })();
+
+  // ============================================================
+  // MOBILE MENU
+  // ============================================================
+  (function() {
+    const hamburger = document.getElementById('navHamburger');
+    const menu = document.getElementById('mobileMenu');
+    if (!hamburger || !menu) return;
+
+    function openMenu() {
+      hamburger.classList.add('is-open');
+      menu.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      hamburger.classList.remove('is-open');
+      menu.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.contains('is-open') ? closeMenu() : openMenu();
+    });
+
+    menu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  })();
+
+  // ============================================================
+  // HERO PARTICLES CANVAS
+  // ============================================================
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [], animId;
+    const COUNT = 55;
+    const ACCENT = [184, 235, 35];
+
+    function resize() {
+      const section = canvas.parentElement;
+      W = canvas.width  = section.offsetWidth;
+      H = canvas.height = section.offsetHeight;
+    }
+
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+
+    function Particle() {
+      this.reset = function() {
+        this.x  = rnd(0, W);
+        this.y  = rnd(0, H);
+        this.vx = rnd(-0.18, 0.18);
+        this.vy = rnd(-0.22, 0.22);
+        this.r  = rnd(1, 2.2);
+        this.a  = rnd(0.15, 0.55);
+        this.life = rnd(0.004, 0.009);
+        this.growing = true;
+      };
+      this.reset();
+    }
+
+    for (let i = 0; i < COUNT; i++) {
+      const p = new Particle();
+      p.x = rnd(0, W || 1200);
+      p.y = rnd(0, H || 800);
+      particles.push(p);
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 130) {
+            const alpha = (1 - dist / 130) * 0.12;
+            ctx.strokeStyle = `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      drawConnections();
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.growing) { p.a += p.life; if (p.a >= 0.55) p.growing = false; }
+        else            { p.a -= p.life; if (p.a <= 0.05) p.reset(); }
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},${p.a})`;
+        ctx.fill();
+      });
+
+      animId = requestAnimationFrame(tick);
+    }
+
+    resize();
+    tick();
+    window.addEventListener('resize', resize, { passive: true });
+  })();
+
+  // ============================================================
+  // ACTIVE NAV ON SCROLL
+  // ============================================================
+  (function() {
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    const sections = [];
+    navLinks.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ el, a });
+    });
+
+    function updateActive() {
+      const y = window.scrollY + 120;
+      let current = null;
+      sections.forEach(({ el, a }) => {
+        if (el.offsetTop <= y) current = a;
+      });
+      navLinks.forEach(a => a.classList.remove('active'));
+      if (current) current.classList.add('active');
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  })();
+
+  // ============================================================
+  // TEXT SCRAMBLE ON REVEAL
+  // ============================================================
+  (function() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&';
+    const rndChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+
+    function scramble(el) {
+      const original = el.textContent;
+      const len = original.length;
+      let frame = 0;
+      const totalFrames = Math.min(len * 2.5, 40);
+      const id = setInterval(() => {
+        el.innerHTML = original.split('').map((ch, i) => {
+          if (ch === ' ' || ch === '\n') return ch;
+          const revealAt = (i / len) * (totalFrames * 0.7);
+          if (frame >= revealAt) return ch;
+          return `<span class="scramble-char">${rndChar()}</span>`;
+        }).join('');
+        frame++;
+        if (frame > totalFrames) {
+          clearInterval(id);
+          el.textContent = original;
+        }
+      }, 35);
+    }
+
+    const sectionHeads = document.querySelectorAll('.section-head h2, .trust h2');
+    const scrambleObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          scramble(e.target);
+          scrambleObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sectionHeads.forEach(h => scrambleObs.observe(h));
+  })();
 </script>
 
 </body>
