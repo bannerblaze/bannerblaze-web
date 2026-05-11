@@ -1155,10 +1155,127 @@ footer {
 
 /* Selection */
 ::selection { background: var(--accent); color: #000; }
+
+/* ==========================================================
+   SCROLL PROGRESS BAR
+   ========================================================== */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(184,235,35,0.7), 0 0 24px rgba(184,235,35,0.3);
+  z-index: 999;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ==========================================================
+   GLASS: CURSOR GLOW + TILT SUPPORT
+   ========================================================== */
+.glass { position: relative; }
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 240px at var(--gx, 50%) var(--gy, 50%),
+    rgba(184, 235, 35, 0.08),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.glass:hover::before { opacity: 1; }
+.glass > * { position: relative; z-index: 1; }
+
+/* ==========================================================
+   TICKER / MARQUEE
+   ========================================================== */
+.ticker-section {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 15px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 34s linear infinite;
+}
+.ticker-section:hover .ticker-track { animation-play-state: paused; }
+.ticker-inner {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ticker-inner span {
+  font-family: var(--display);
+  font-size: 0.77rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  padding: 0 20px;
+  transition: color 0.3s;
+}
+.ticker-inner span.hi { color: var(--accent); }
+.ticker-inner span.sep {
+  color: rgba(184, 235, 35, 0.3);
+  padding: 0 4px;
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  font-family: monospace;
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ==========================================================
+   DIRECTIONAL REVEALS
+   ========================================================== */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-36px);
+  transition: opacity 0.85s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(36px);
+  transition: opacity 0.85s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal-left.in-view,
+.reveal-right.in-view { opacity: 1; transform: translateX(0); }
+
+/* More stagger children */
+.reveal-stagger.in-view > *:nth-child(5) { transition-delay: 0.45s; }
+.reveal-stagger.in-view > *:nth-child(6) { transition-delay: 0.55s; }
+.reveal-stagger.in-view > *:nth-child(7) { transition-delay: 0.65s; }
+
+/* COUNTER NUMBER */
+.count-num { display: inline; font-variant-numeric: tabular-nums; }
+
+/* ==========================================================
+   REDUCED MOTION
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
+}
 </style>
 </head>
 
 <body>
+<div id="scrollProgress" class="scroll-progress"></div>
 
 <!-- ===========================================================
      NAV
@@ -1220,7 +1337,7 @@ footer {
               <span style="--h: 70%"></span>
               <span style="--h: 90%"></span>
             </div>
-            <span class="screen-stat">+2.4K<small>vistas/h</small></span>
+            <span class="screen-stat"><span class="count-num" data-target="2400">+2.4K</span><small>vistas/h</small></span>
           </div>
         </div>
 
@@ -1259,6 +1376,36 @@ footer {
   </div>
 </section>
 
+<!-- TICKER -->
+<div class="ticker-section" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-inner">
+      <span>Pantallas LED</span><span class="sep">·</span>
+      <span class="hi">Medellín</span><span class="sep">·</span>
+      <span>Contenido verificado</span><span class="sep">·</span>
+      <span>Alto tráfico</span><span class="sep">·</span>
+      <span class="hi">QR interactivo</span><span class="sep">·</span>
+      <span>Diseño en 24h</span><span class="sep">·</span>
+      <span>Publicidad que se siente</span><span class="sep">·</span>
+      <span class="hi">Tiempo real</span><span class="sep">·</span>
+      <span>Sin imprentas</span><span class="sep">·</span>
+      <span>Zonas premium</span><span class="sep">·</span>
+    </div>
+    <div class="ticker-inner" aria-hidden="true">
+      <span>Pantallas LED</span><span class="sep">·</span>
+      <span class="hi">Medellín</span><span class="sep">·</span>
+      <span>Contenido verificado</span><span class="sep">·</span>
+      <span>Alto tráfico</span><span class="sep">·</span>
+      <span class="hi">QR interactivo</span><span class="sep">·</span>
+      <span>Diseño en 24h</span><span class="sep">·</span>
+      <span>Publicidad que se siente</span><span class="sep">·</span>
+      <span class="hi">Tiempo real</span><span class="sep">·</span>
+      <span>Sin imprentas</span><span class="sep">·</span>
+      <span>Zonas premium</span><span class="sep">·</span>
+    </div>
+  </div>
+</div>
+
 <!-- ===========================================================
      PROBLEMA
      =========================================================== -->
@@ -1296,7 +1443,7 @@ footer {
 <section>
   <div class="container">
     <div class="what-grid">
-      <div class="reveal">
+      <div class="reveal-left">
         <span class="eyebrow">La solución</span>
         <h2 style="margin-top: 20px; margin-bottom: 28px;">Publicidad que se siente,<br>no solo se ve.</h2>
         <p>BannerBlaze es publicidad digital exterior pensada para una ciudad que ya no se deja sorprender fácil. Convertimos pantallas en puntos de encuentro entre marcas y personas, con contenido que se actualiza, se explora y se verifica.</p>
@@ -1307,7 +1454,7 @@ footer {
         </ul>
       </div>
 
-      <div class="reveal screens-grid">
+      <div class="reveal-right screens-grid">
         <div class="mini-screen tall">Centro</div>
         <div class="mini-screen accent"><div class="live-dot"></div></div>
         <div class="mini-screen">Poblado</div>
@@ -1415,7 +1562,7 @@ footer {
 <section class="trust">
   <div class="container">
     <div class="trust-grid">
-      <div class="reveal">
+      <div class="reveal-left">
         <span class="eyebrow">Nuestro compromiso</span>
         <h2 style="margin-top: 20px;">Si aparece en una<br>pantalla nuestra,<br><span class="accent">es porque es verdad.</span></h2>
         <div class="trust-quote">
@@ -1592,7 +1739,7 @@ footer {
   });
 
   // Scroll reveal con IntersectionObserver
-  const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
+  const reveals = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-left, .reveal-right');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1603,6 +1750,89 @@ footer {
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
   reveals.forEach(el => io.observe(el));
+
+  // ============================================================
+  // SCROLL PROGRESS BAR
+  // ============================================================
+  const progressBar = document.getElementById('scrollProgress');
+  function updateProgress() {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ============================================================
+  // 3D TILT + CURSOR GLOW ON GLASS CARDS
+  // ============================================================
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(hover: none)').matches;
+
+  if (!prefersReducedMotion && !isTouch) {
+    document.querySelectorAll('.glass').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'border-color 0.3s, background 0.3s, box-shadow 0.3s';
+      });
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = (x / rect.width  - 0.5) *  7;
+        const cy = (y / rect.height - 0.5) * -7;
+        card.style.transform = `perspective(900px) rotateY(${cx}deg) rotateX(${cy}deg) translateY(-4px) scale(1.005)`;
+        card.style.setProperty('--gx', x + 'px');
+        card.style.setProperty('--gy', y + 'px');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = '';
+        card.style.transform = '';
+      });
+    });
+
+    // Magnetic buttons
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width  / 2) * 0.22;
+        const y = (e.clientY - rect.top  - rect.height / 2) * 0.22;
+        btn.style.transform = `translate(${x}px, ${y}px) translateY(-2px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
+
+  // ============================================================
+  // ANIMATED COUNTER
+  // ============================================================
+  function animateCount(el) {
+    const target = parseInt(el.dataset.target, 10);
+    if (!target) return;
+    const duration = 1800;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = Math.round(target * eased);
+      el.textContent = '+' + (val / 1000).toFixed(1) + 'K';
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  const countEls = document.querySelectorAll('.count-num[data-target]');
+  if (countEls.length) {
+    const countObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          countObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    countEls.forEach(el => countObserver.observe(el));
+  }
 
   // Nav: cambia padding al hacer scroll
   const nav = document.querySelector('.nav');
