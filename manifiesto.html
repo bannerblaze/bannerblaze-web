@@ -632,10 +632,59 @@ footer {
 .reveal-stagger.in-view > *:nth-child(7) { transition-delay: 0.47s; }
 
 ::selection { background: var(--accent); color: #000; }
+
+/* ==========================================================
+   MODERNIZATION v2 — Premium enhancements
+   ========================================================== */
+#bb-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--accent), rgba(184,235,35,0.5));
+  z-index: 9999; pointer-events: none;
+  box-shadow: 0 0 12px rgba(184,235,35,0.55), 0 0 4px rgba(184,235,35,0.8);
+}
+#bb-cursor-dot {
+  position: fixed; width: 6px; height: 6px; background: var(--accent);
+  border-radius: 50%; pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%); box-shadow: 0 0 10px rgba(184,235,35,0.8);
+  transition: transform 0.15s, opacity 0.3s;
+}
+#bb-cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1.5px solid rgba(184,235,35,0.4); border-radius: 50%;
+  pointer-events: none; z-index: 9997; transform: translate(-50%,-50%);
+  transition: width 0.3s cubic-bezier(0.2,0.8,0.2,1), height 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s, opacity 0.3s;
+}
+body.cursor-hover #bb-cursor-ring { width: 56px; height: 56px; border-color: rgba(184,235,35,0.65); }
+body.cursor-active #bb-cursor-dot { transform: translate(-50%,-50%) scale(1.6); }
+@media (hover: none), (max-width: 768px) { #bb-cursor-dot, #bb-cursor-ring { display: none; } }
+a, button, .btn { cursor: none; }
+@media (hover: none), (max-width: 768px) { a, button, .btn { cursor: auto; } }
+.btn:active { transform: scale(0.96) translateY(1px) !important; }
+.glass { will-change: transform; }
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1.5px; background: var(--accent);
+  border-radius: 2px; transition: width 0.3s cubic-bezier(0.2,0.8,0.2,1);
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.eyebrow { position: relative; }
+.eyebrow::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--accent);
+  transition: width 0.6s cubic-bezier(0.2,0.8,0.2,1) 0.2s;
+}
+.in-view .eyebrow::after, .reveal.in-view .eyebrow::after { width: 100%; }
 </style>
 </head>
 
 <body>
+
+<!-- Progress bar -->
+<div id="bb-progress"></div>
+<!-- Custom cursor -->
+<div id="bb-cursor-dot"></div>
+<div id="bb-cursor-ring"></div>
 
 <!-- NAV -->
 <header class="nav">
@@ -892,6 +941,65 @@ footer {
       nav.style.background = 'rgba(10, 10, 10, 0.6)';
     }
   }, { passive: true });
+
+  // Scroll Progress Bar
+  (function () {
+    const bar = document.getElementById('bb-progress');
+    if (!bar) return;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = Math.min((window.scrollY / max) * 100, 100) + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // Custom Cursor
+  (function () {
+    const dot = document.getElementById('bb-cursor-dot');
+    const ring = document.getElementById('bb-cursor-ring');
+    if (!dot || !ring || window.innerWidth <= 768) return;
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    }, { passive: true });
+    (function lerpRing() {
+      rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
+      ring.style.left = Math.round(rx * 10) / 10 + 'px';
+      ring.style.top  = Math.round(ry * 10) / 10 + 'px';
+      requestAnimationFrame(lerpRing);
+    })();
+    document.querySelectorAll('a, button, .btn, .glass').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+    document.addEventListener('mousedown', () => document.body.classList.add('cursor-active'));
+    document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-active'));
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+  })();
+
+  // 3D Card Tilt
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const MAX = 7;
+    document.querySelectorAll('.glass').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const dx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+        const dy = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+        card.style.transition = 'transform 0.12s ease-out, border-color 0.3s, background 0.3s';
+        card.style.transform = `translateY(-4px) perspective(900px) rotateY(${dx * MAX}deg) rotateX(${-dy * MAX}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s, background 0.3s';
+        card.style.transform = '';
+      });
+    });
+  })();
+
 </script>
 
 </body>

@@ -1536,10 +1536,331 @@
       background: var(--accent);
       color: #000;
     }
+
+    /* ==========================================================
+       MODERNIZATION v2 — Premium UI enhancements
+       ========================================================== */
+
+    /* Scroll progress bar */
+    #bb-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), rgba(184,235,35,0.5));
+      z-index: 9999;
+      box-shadow: 0 0 12px rgba(184,235,35,0.55), 0 0 4px rgba(184,235,35,0.8);
+      pointer-events: none;
+    }
+
+    /* Custom cursor */
+    #bb-cursor-dot {
+      position: fixed;
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s, opacity 0.3s, background 0.3s;
+      box-shadow: 0 0 10px rgba(184,235,35,0.8);
+    }
+    #bb-cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(184,235,35,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s cubic-bezier(0.2,0.8,0.2,1), height 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s, opacity 0.3s, background 0.3s;
+    }
+    @media (max-width: 768px) {
+      #bb-cursor-dot, #bb-cursor-ring { display: none; }
+    }
+    body.cursor-hover #bb-cursor-ring {
+      width: 56px; height: 56px;
+      border-color: rgba(184,235,35,0.65);
+      background: rgba(184,235,35,0.04);
+    }
+    body.cursor-active #bb-cursor-dot {
+      transform: translate(-50%,-50%) scale(1.6);
+    }
+    a, button, .btn { cursor: none; }
+    @media (max-width: 768px) { a, button, .btn { cursor: auto; } }
+
+    /* Tilt — preserve-3d on cards */
+    .glass {
+      will-change: transform;
+    }
+
+    /* Button active press */
+    .btn:active {
+      transform: scale(0.96) translateY(1px) !important;
+    }
+
+    /* Enhanced hero title glow */
+    .hero h1 .accent {
+      color: var(--accent);
+      text-shadow: 0 0 60px rgba(184,235,35,0.25);
+    }
+
+    /* Eyebrow animated underline */
+    .eyebrow {
+      position: relative;
+    }
+    .eyebrow::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.6s cubic-bezier(0.2,0.8,0.2,1) 0.2s;
+    }
+    .in-view .eyebrow::after,
+    .reveal.in-view .eyebrow::after,
+    .reveal-stagger.in-view .eyebrow::after {
+      width: 100%;
+    }
+
+    /* Nav active link */
+    .nav-links a {
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+
+    /* Enhanced step number hover */
+    .glass:hover .num { color: #d4ff3d; }
+
+    /* Better card glow */
+    .diff-card:hover,
+    .for-card:hover {
+      box-shadow: 0 0 0 1px rgba(184,235,35,0.18), 0 24px 64px -20px rgba(0,0,0,0.6);
+    }
+
+    /* Steps connector enhanced */
+    .steps::before {
+      background: linear-gradient(90deg, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+      opacity: 0.15;
+    }
+
+    /* Scroll down indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 48px; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: rise 1s 1.8s cubic-bezier(0.2,0.8,0.2,1) forwards;
+      pointer-events: none;
+    }
+    .scroll-hint span {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      font-weight: 600;
+    }
+    .scroll-hint-line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      animation: scrollLineAnim 2.4s ease-in-out infinite;
+      transform-origin: top;
+    }
+    @keyframes scrollLineAnim {
+      0%, 100% { opacity: 0.35; transform: scaleY(0.7); }
+      50%       { opacity: 1;    transform: scaleY(1); }
+    }
+
+    /* Ambient background orbs for sections */
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbDrift 9s ease-in-out infinite;
+    }
+    @keyframes orbDrift {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33%       { transform: translate(-18px, 12px) scale(1.06); }
+      66%       { transform: translate(12px,-14px) scale(0.97); }
+    }
+
+    /* Section reveal stagger — 5th and 6th child */
+    .reveal-stagger.in-view>*:nth-child(5) { transition-delay: 0.45s; }
+    .reveal-stagger.in-view>*:nth-child(6) { transition-delay: 0.55s; }
+
+    /* Pillar hover */
+    .pillar {
+      transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s, background 0.3s;
+    }
+    .pillar:hover {
+      transform: translateY(-4px);
+      border-color: rgba(184,235,35,0.3);
+      background: var(--surface-hover);
+    }
+
+    /* Footer link chevron */
+    .footer-col a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0px;
+      transition: color 0.3s, gap 0.3s;
+    }
+    .footer-col a:hover {
+      gap: 6px;
+      color: var(--accent);
+    }
+
+    /* Shimmer gradient on hero eyebrow */
+    @keyframes eyebrowShimmer {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+    .hero .eyebrow {
+      animation: eyebrowShimmer 3s ease-in-out infinite;
+    }
+
+    /* Final CTA glow pulse */
+    .final-cta::before {
+      animation: ctaGlow 5s ease-in-out infinite;
+    }
+    @keyframes ctaGlow {
+      0%, 100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+      50%       { opacity: 0.8; transform: translate(-50%,-50%) scale(1.08); }
+    }
+
+    /* Mini screens grid enhanced hover */
+    .mini-screen {
+      transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s;
+    }
+    .mini-screen:hover {
+      transform: scale(1.03);
+      border-color: rgba(184,235,35,0.25);
+      z-index: 1;
+    }
+
+    /* What-list item hover */
+    .what-list li {
+      transition: padding-left 0.3s cubic-bezier(0.2,0.8,0.2,1), color 0.3s;
+    }
+    .what-list li:hover {
+      padding-left: 8px;
+      color: var(--text);
+    }
+
+    /* Mobile improvements */
+    @media (max-width: 768px) {
+      .diff-card, .for-card { padding: 28px 24px; }
+      .problem-card { padding: 24px 20px; }
+      .step { padding: 24px 20px; }
+      .trust-quote { font-size: clamp(1.15rem, 4vw, 1.5rem); }
+    }
+
+    /* Step number big accent behind */
+    .step {
+      position: relative;
+      overflow: hidden;
+    }
+    .step::before {
+      content: attr(data-n);
+      position: absolute;
+      top: -10px; right: 16px;
+      font-family: var(--display);
+      font-size: 8rem;
+      font-weight: 900;
+      color: rgba(184,235,35,0.04);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      transition: color 0.4s;
+    }
+    .step:hover::before {
+      color: rgba(184,235,35,0.08);
+    }
+
+    /* Trust quote enhanced */
+    .trust-quote {
+      position: relative;
+    }
+    .trust-quote::before {
+      content: '"';
+      position: absolute;
+      top: -20px; left: -8px;
+      font-family: var(--display);
+      font-size: 6rem;
+      color: rgba(184,235,35,0.12);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* Gradient text for accent words in h2 */
+    .hero h1 .accent,
+    .trust h2 .accent,
+    .final-cta h2 .accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #d4ff3d 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200%;
+      animation: gradientShift 6s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Hero subtext leading line */
+    .hero-sub {
+      border-left: 2px solid rgba(184,235,35,0.25);
+      padding-left: 16px;
+      margin-left: 2px;
+    }
+
+    /* Problem card number large */
+    .problem-card .num {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+    }
+
+    /* For card hover border glow */
+    .for-card:hover .label {
+      letter-spacing: 0.25em;
+      transition: letter-spacing 0.4s;
+    }
+
+    /* Enhanced footer */
+    footer {
+      background: linear-gradient(to top, rgba(184,235,35,0.02), transparent 40%);
+    }
+
   </style>
 </head>
 
 <body>
+
+  <!-- Progress bar -->
+  <div id="bb-progress"></div>
+
+  <!-- Custom cursor (desktop only) -->
+  <div id="bb-cursor-dot"></div>
+  <div id="bb-cursor-ring"></div>
 
   <!-- ===========================================================
      NAV
@@ -1567,6 +1888,9 @@
      HERO
      =========================================================== -->
     <section class="hero">
+      <!-- Ambient orbs de fondo -->
+      <div class="ambient-orb" aria-hidden="true" style="width:600px;height:600px;background:radial-gradient(circle,rgba(184,235,35,0.07),transparent 65%);top:-15%;left:-10%;animation-duration:11s;"></div>
+      <div class="ambient-orb" aria-hidden="true" style="width:400px;height:400px;background:radial-gradient(circle,rgba(184,235,35,0.05),transparent 65%);bottom:-10%;right:-5%;animation-duration:14s;animation-delay:-5s;"></div>
       <div class="container hero-grid">
         <div class="hero-content">
           <span class="eyebrow">Publicidad digital exterior · Medellín</span>
@@ -1643,6 +1967,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-hint-line"></div>
+      </div>
+
     </section>
 
     <!-- ===========================================================
@@ -1724,23 +2055,23 @@
 
         <div class="how-wrapper reveal-stagger">
           <div class="steps">
-            <article class="glass step">
+            <article class="glass step" data-n="01">
               <div class="num">01</div>
               <h3>Diseñas</h3>
               <p>Nos cuentas qué quieres comunicar. Te ayudamos a construir la pieza o adaptamos la que ya tienes.</p>
             </article>
-            <article class="glass step">
+            <article class="glass step" data-n="02">
               <div class="num">02</div>
               <h3>Verificamos</h3>
               <p>Revisamos cada pieza antes de publicarla. Si algo no es real, no sale al aire.</p>
             </article>
-            <article class="glass step">
+            <article class="glass step" data-n="03">
               <div class="num">03</div>
               <h3>Publicamos</h3>
               <p>Tu contenido aparece en pantallas seleccionadas según tu público y zona. Lo activamos cuando lo
                 necesites.</p>
             </article>
-            <article class="glass step">
+            <article class="glass step" data-n="04">
               <div class="num">04</div>
               <h3>Interactúas</h3>
               <p>Las personas escanean, exploran y se llevan tu mensaje al celular. Tú ves los resultados en tiempo
@@ -2030,6 +2361,100 @@
       }
       lastScroll = y;
     }, { passive: true });
+
+    // ============================================================
+    // MODERNIZATION v2 — Enhanced interactions
+    // ============================================================
+
+    // Scroll Progress Bar
+    (function () {
+      const bar = document.getElementById('bb-progress');
+      if (!bar) return;
+      const update = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = Math.min((window.scrollY / max) * 100, 100) + '%';
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+
+    // Custom Cursor (desktop only)
+    (function () {
+      const dot = document.getElementById('bb-cursor-dot');
+      const ring = document.getElementById('bb-cursor-ring');
+      if (!dot || !ring || window.innerWidth <= 768) return;
+
+      let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      let rx = mx, ry = my;
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top = my + 'px';
+      }, { passive: true });
+
+      (function lerpRing() {
+        rx += (mx - rx) * 0.11;
+        ry += (my - ry) * 0.11;
+        ring.style.left = Math.round(rx * 10) / 10 + 'px';
+        ring.style.top  = Math.round(ry * 10) / 10 + 'px';
+        requestAnimationFrame(lerpRing);
+      })();
+
+      document.querySelectorAll('a, button, .btn, .glass, input, textarea').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      });
+
+      document.addEventListener('mousedown', () => document.body.classList.add('cursor-active'));
+      document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-active'));
+
+      document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+    })();
+
+    // 3D Card Tilt
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const MAX = 7;
+      document.querySelectorAll('.glass').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          const dx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+          const dy = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+          card.style.transition = 'transform 0.12s ease-out, border-color 0.3s, background 0.3s';
+          card.style.transform = `translateY(-4px) perspective(900px) rotateY(${dx * MAX}deg) rotateX(${-dy * MAX}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transition = 'transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s, background 0.3s';
+          card.style.transform = '';
+        });
+      });
+    })();
+
+    // Section-aware nav highlight
+    (function () {
+      const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+      if (!navLinks.length) return;
+      const targets = Array.from(navLinks).map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+          }
+        });
+      }, { threshold: 0.35 });
+      targets.forEach(s => obs.observe(s));
+    })();
+
+    // Hide scroll hint after first scroll
+    (function () {
+      const hint = document.querySelector('.scroll-hint');
+      if (!hint) return;
+      const hide = () => { hint.style.opacity = '0'; hint.style.transition = 'opacity 0.5s'; };
+      window.addEventListener('scroll', hide, { once: true, passive: true });
+    })();
+
   </script>
 
 </body>

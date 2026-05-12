@@ -882,12 +882,50 @@ footer {
 }
 .mobile-menu.is-open .mobile-cta-btn { opacity: 1; transform: translateY(0); }
 .mobile-menu .mobile-cta-btn:hover { background: #c8f53a; color: #000; }
-.glass { transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, background 0.3s, box-shadow 0.4s; }
+.glass { transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, background 0.3s, box-shadow 0.4s; will-change: transform; }
 .glass:hover { box-shadow: 0 0 0 1px rgba(184,235,35,0.2), 0 24px 64px -20px rgba(0,0,0,0.7), 0 0 48px -18px rgba(184,235,35,0.07); }
+
+/* ==========================================================
+   MODERNIZATION v2 — Premium enhancements
+   ========================================================== */
+#bb-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--accent), rgba(184,235,35,0.5));
+  z-index: 9999; pointer-events: none;
+  box-shadow: 0 0 12px rgba(184,235,35,0.55), 0 0 4px rgba(184,235,35,0.8);
+}
+.btn:active { transform: scale(0.96) translateY(1px) !important; }
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1.5px; background: var(--accent);
+  border-radius: 2px; transition: width 0.3s cubic-bezier(0.2,0.8,0.2,1);
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.eyebrow { position: relative; }
+.eyebrow::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--accent);
+  transition: width 0.6s cubic-bezier(0.2,0.8,0.2,1) 0.2s;
+}
+.in-view .eyebrow::after, .reveal.in-view .eyebrow::after { width: 100%; }
+.founder-badge { animation: foundBadgeFloat 3s ease-in-out infinite; }
+@keyframes foundBadgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.founder-image-wrap:hover img { transform: scale(1.03); }
+.founder-image-wrap img { transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1); }
+@media (max-width: 768px) { .btn:active { cursor: auto; } }
+a, button, .btn { cursor: none; }
+@media (hover: none), (max-width: 768px) { a, button, .btn { cursor: auto; } }
+.reveal-stagger.in-view > *:nth-child(6) { transition-delay: 0.55s; }
+.reveal-stagger.in-view > *:nth-child(7) { transition-delay: 0.65s; }
 </style>
 </head>
 
 <body>
+<div id="bb-progress"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -1277,6 +1315,38 @@ footer {
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
     document.addEventListener('keydown', e => e.key==='Escape' && close());
   })();
+
+  // Scroll Progress Bar
+  (function () {
+    const bar = document.getElementById('bb-progress');
+    if (!bar) return;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = Math.min((window.scrollY / max) * 100, 100) + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // 3D Card Tilt
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const MAX = 7;
+    document.querySelectorAll('.glass').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const dx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+        const dy = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+        card.style.transition = 'transform 0.12s ease-out, border-color 0.3s, background 0.3s, box-shadow 0.4s';
+        card.style.transform = `translateY(-4px) perspective(900px) rotateY(${dx * MAX}deg) rotateX(${-dy * MAX}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s, background 0.3s, box-shadow 0.4s';
+        card.style.transform = '';
+      });
+    });
+  })();
+
 </script>
 
 </body>
