@@ -1421,6 +1421,329 @@
     }
 
     /* ==========================================================
+   SECCIÓN: BELABLAZE (Plataforma SaaS)
+   ========================================================== */
+    .belablaze {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .belablaze::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 720px;
+      height: 720px;
+      background: radial-gradient(circle, rgba(184, 235, 35, 0.09), transparent 60%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .belablaze .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .bela-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .bela-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border: 1px solid rgba(184, 235, 35, 0.3);
+      border-radius: 100px;
+      background: rgba(184, 235, 35, 0.06);
+      color: var(--accent);
+      font-family: var(--body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .bela-eyebrow .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .bela-title {
+      margin: 0 0 24px;
+    }
+
+    .bela-title .brand-name {
+      color: var(--accent);
+    }
+
+    .bela-desc {
+      font-size: clamp(1rem, 1.2vw, 1.15rem);
+      margin-bottom: 36px;
+      max-width: 560px;
+    }
+
+    .bela-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+
+    .bela-feature {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bela-feature .feat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .bela-feature .feat-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .bela-feature h4 {
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .bela-feature p {
+      font-size: 0.85rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .bela-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .bela-domain {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      color: var(--text-mute);
+    }
+
+    .bela-domain a {
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--border-strong);
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .bela-domain a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Mockup del dashboard */
+    .bela-visual {
+      position: relative;
+      aspect-ratio: 4 / 3;
+    }
+
+    .bela-dash {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+    }
+
+    .bela-dash::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(184, 235, 35, 0.14), transparent 50%);
+      pointer-events: none;
+    }
+
+    .bela-dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bela-dash-brand {
+      font-family: var(--display);
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+
+    .bela-dash-brand .accent {
+      color: var(--accent);
+    }
+
+    .bela-dash-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .bela-dash-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .bela-dash-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bela-stat {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .bela-stat .label {
+      font-size: 0.62rem;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .bela-stat .value {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .bela-stat .value.accent {
+      color: var(--accent);
+    }
+
+    .bela-dash-chart {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 120px;
+    }
+
+    .bela-chart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .bela-chart-head .trend {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .bela-chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .bela-bar {
+      flex: 1;
+      background: linear-gradient(to top, rgba(184, 235, 35, 0.15), rgba(184, 235, 35, 0.5));
+      border-radius: 4px 4px 0 0;
+      min-height: 8px;
+      transition: opacity 0.3s;
+    }
+
+    .bela-bar.active {
+      background: linear-gradient(to top, var(--accent), #d4ff3d);
+      box-shadow: 0 0 24px rgba(184, 235, 35, 0.5);
+    }
+
+    @media (max-width: 980px) {
+      .bela-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .bela-features {
+        max-width: 100%;
+      }
+
+      .bela-visual {
+        order: -1;
+        aspect-ratio: 16 / 11;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .bela-features {
+        grid-template-columns: 1fr;
+      }
+
+      .bela-dash-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .bela-stat:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ==========================================================
    FOOTER
    ========================================================== */
     footer {
@@ -1910,6 +2233,7 @@
       <ul class="nav-links">
         <li><a href="#producto">Producto</a></li>
         <li><a href="#como-funciona">Cómo funciona</a></li>
+        <li><a href="#belablaze">Plataforma</a></li>
         <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
         <li><a href="manifiesto.html">Manifiesto</a></li>
       </ul>
@@ -2269,6 +2593,114 @@
     </section>
 
     <!-- ===========================================================
+     BELABLAZE — Plataforma SaaS
+     =========================================================== -->
+    <section id="belablaze" class="belablaze">
+      <div class="container">
+        <div class="bela-grid">
+          <div class="reveal">
+            <div class="bela-eyebrow">
+              <span class="live-dot"></span>
+              Nueva plataforma
+            </div>
+            <h2 class="bela-title">Conoce <span class="brand-name">BelaBlaze</span>,<br>tu centro de control.</h2>
+            <p class="bela-desc">La plataforma DOOH donde administras tus anuncios, controlas tus campañas y gestionas todos los servicios de BannerBlaze en un solo lugar. Lo que antes tomaba llamadas, ahora pasa en clics.</p>
+
+            <div class="bela-features reveal-stagger">
+              <div class="glass bela-feature">
+                <div class="feat-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="9" rx="1.5" />
+                    <rect x="14" y="3" width="7" height="5" rx="1.5" />
+                    <rect x="14" y="12" width="7" height="9" rx="1.5" />
+                    <rect x="3" y="16" width="7" height="5" rx="1.5" />
+                  </svg>
+                </div>
+                <h4>Administra anuncios</h4>
+                <p>Sube, programa y publica desde un mismo panel.</p>
+              </div>
+              <div class="glass bela-feature">
+                <div class="feat-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3v18h18" />
+                    <path d="M7 14l4-4 4 4 6-6" />
+                  </svg>
+                </div>
+                <h4>Métricas en vivo</h4>
+                <p>Ve interacciones y alcance en tiempo real.</p>
+              </div>
+              <div class="glass bela-feature">
+                <div class="feat-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 3" />
+                  </svg>
+                </div>
+                <h4>Programa campañas</h4>
+                <p>Decide cuándo, dónde y por cuánto tiempo aparecer.</p>
+              </div>
+              <div class="glass bela-feature">
+                <div class="feat-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2 4 6v6c0 5.5 3.8 10.7 8 12 4.2-1.3 8-6.5 8-12V6l-8-4Z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </div>
+                <h4>Verificación integrada</h4>
+                <p>Tu contenido pasa la revisión sin salir del panel.</p>
+              </div>
+            </div>
+
+            <div class="bela-cta">
+              <a href="https://app.bannerblaze.com/" target="_blank" rel="noopener" class="btn btn-primary">Acceder a BelaBlaze <span class="arrow">→</span></a>
+              <span class="bela-domain"><a href="https://app.bannerblaze.com/" target="_blank" rel="noopener">app.bannerblaze.com</a></span>
+            </div>
+          </div>
+
+          <div class="reveal bela-visual">
+            <div class="bela-dash">
+              <div class="bela-dash-header">
+                <div class="bela-dash-brand">Bela<span class="accent">Blaze</span></div>
+                <div class="bela-dash-status">Online</div>
+              </div>
+
+              <div class="bela-dash-stats">
+                <div class="bela-stat">
+                  <div class="label">Campañas</div>
+                  <div class="value">12</div>
+                </div>
+                <div class="bela-stat">
+                  <div class="label">Impresiones</div>
+                  <div class="value accent">84K</div>
+                </div>
+                <div class="bela-stat">
+                  <div class="label">Interacciones</div>
+                  <div class="value">3.2K</div>
+                </div>
+              </div>
+
+              <div class="bela-dash-chart">
+                <div class="bela-chart-head">
+                  <span>Actividad de la semana</span>
+                  <span class="trend">+24%</span>
+                </div>
+                <div class="bela-chart-bars">
+                  <div class="bela-bar" style="height: 35%"></div>
+                  <div class="bela-bar" style="height: 55%"></div>
+                  <div class="bela-bar" style="height: 42%"></div>
+                  <div class="bela-bar" style="height: 68%"></div>
+                  <div class="bela-bar active" style="height: 88%"></div>
+                  <div class="bela-bar" style="height: 60%"></div>
+                  <div class="bela-bar" style="height: 75%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================================
      CTA FINAL
      =========================================================== -->
     <section id="contacto" class="final-cta">
@@ -2330,6 +2762,8 @@
           <ul>
             <li><a href="#como-funciona">Cómo funciona</a></li>
             <li><a href="#para-quien">Para quién</a></li>
+            <li><a href="#belablaze">BelaBlaze</a></li>
+            <li><a href="https://app.bannerblaze.com/" target="_blank" rel="noopener">Iniciar sesión</a></li>
             <li><a href="#" data-action="open-form">Verificación</a></li>
           </ul>
         </div>
