@@ -544,7 +544,35 @@ section {
 
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 24px; }
-  .hero-visual { max-width: 480px; margin: 0 auto; }
+  .hero-visual { max-width: 420px; margin: 0 auto; }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding-top: 120px;
+    padding-bottom: 56px;
+  }
+  .hero h1 { margin: 16px 0 20px; }
+  .hero-sub { margin-bottom: 28px; }
+  .hero-cta { margin-bottom: 16px; }
+  .hero-cta .btn { flex: 1 1 auto; padding: 14px 20px; font-size: 0.9rem; }
+  /* Visual decorativo oculto en móvil: el hero queda solo con texto + CTAs */
+  .hero-visual { display: none; }
+  /* Glow decorativo sutil detrás del título, sin afectar el flujo */
+  .hero-content { position: relative; }
+  .hero-content::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(184, 235, 35, 0.16), transparent 65%);
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 /* ==========================================================
