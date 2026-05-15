@@ -2013,37 +2013,6 @@
       opacity: 0.15;
     }
 
-    /* Scroll down indicator */
-    .scroll-hint {
-      position: absolute;
-      bottom: 48px; left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: rise 1s 1.8s cubic-bezier(0.2,0.8,0.2,1) forwards;
-      pointer-events: none;
-    }
-    .scroll-hint span {
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-mute);
-      font-weight: 600;
-    }
-    .scroll-hint-line {
-      width: 1px; height: 44px;
-      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-      animation: scrollLineAnim 2.4s ease-in-out infinite;
-      transform-origin: top;
-    }
-    @keyframes scrollLineAnim {
-      0%, 100% { opacity: 0.35; transform: scaleY(0.7); }
-      50%       { opacity: 1;    transform: scaleY(1); }
-    }
-
     /* Ambient background orbs for sections */
     .ambient-orb {
       position: absolute;
@@ -2325,12 +2294,6 @@
             <div class="grid-decoration"></div>
           </div>
         </div>
-      </div>
-
-      <!-- Scroll hint -->
-      <div class="scroll-hint" aria-hidden="true">
-        <span>Scroll</span>
-        <div class="scroll-hint-line"></div>
       </div>
 
     </section>
@@ -2938,14 +2901,6 @@
         });
       }, { threshold: 0.35 });
       targets.forEach(s => obs.observe(s));
-    })();
-
-    // Hide scroll hint after first scroll
-    (function () {
-      const hint = document.querySelector('.scroll-hint');
-      if (!hint) return;
-      const hide = () => { hint.style.opacity = '0'; hint.style.transition = 'opacity 0.5s'; };
-      window.addEventListener('scroll', hide, { once: true, passive: true });
     })();
 
   </script>
