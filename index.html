@@ -346,8 +346,13 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 0.95fr 1.15fr;
-      gap: 24px;
+      gap: 40px;
       align-items: center;
+      width: 100%;
+    }
+
+    .hero-content {
+      min-width: 0;
     }
 
     .hero-content>* {
@@ -391,6 +396,9 @@
 
     .hero h1 {
       margin: 24px 0 28px;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .hero h1 .accent {
@@ -452,6 +460,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      min-width: 0;
+      width: 100%;
     }
 
     /* ==========================================================
@@ -833,7 +843,7 @@
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    @media (max-width: 768px) {
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 48px;
@@ -2189,6 +2199,8 @@
     .ai-partners {
       margin: 48px 0 0;
       position: relative;
+      overflow: hidden;
+      width: 100%;
     }
 
     .partners-track {
