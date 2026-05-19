@@ -344,67 +344,30 @@
     }
 
     .hero-grid {
-      display: grid !important;
-      grid-template-columns: 0.95fr 1.15fr !important;
-      gap: 40px;
-      align-items: start;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      align-items: center;
+      gap: 24px;
+      max-width: 1280px;
       width: 100%;
-      max-width: 100%;
-      height: 100%;
-      min-height: calc(100vh - 200px);
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
     }
 
     .hero-content {
-      min-width: 0;
       display: block;
     }
 
-    .hero-content>* {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    .hero-content > * {
       position: relative;
       z-index: 5;
     }
 
-    .hero-content>*:nth-child(1) {
-      animation-delay: 0.1s;
-    }
-
-    .hero-content>*:nth-child(2) {
-      animation-delay: 0.25s;
-    }
-
-    .hero-content>*:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    .hero-content>*:nth-child(4) {
-      animation-delay: 0.55s;
-    }
-
-    .hero-content>*:nth-child(5) {
-      animation-delay: 0.7s;
-    }
-
-    .hero-content>*:nth-child(6) {
-      animation-delay: 0.85s;
-    }
-
-    @keyframes rise {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .hero h1 {
       margin: 24px 0 28px;
-      max-width: 100%;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      line-height: 0.95;
-      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      position: relative;
     }
 
     .hero h1 .accent {
@@ -412,25 +375,22 @@
     }
 
     .hero-sub {
-      font-size: clamp(1rem, 1.3vw, 1.2rem);
       max-width: 540px;
-      margin-bottom: 36px;
-      color: var(--text-dim);
+      position: relative;
     }
 
     .hero-cta {
       display: flex;
       gap: 12px;
+      position: relative;
       flex-wrap: wrap;
-      margin-bottom: 24px;
     }
 
     .hero-micro {
-      font-size: 0.85rem;
-      color: var(--text-mute);
       display: flex;
       align-items: center;
       gap: 8px;
+      position: relative;
     }
 
     .hero-micro::before {
@@ -459,15 +419,10 @@
    BILLBOARD LED — Imagen real con resplandor verde
    ==================================================== */
     .hero-visual {
-      position: relative;
-      aspect-ratio: 700/589;
-      opacity: 0;
-      animation: rise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 0;
-      width: 100%;
+      position: relative;
     }
 
     /* ==========================================================
