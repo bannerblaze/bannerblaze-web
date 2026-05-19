@@ -2243,6 +2243,23 @@
       background: linear-gradient(to top, rgba(184,235,35,0.02), transparent 40%);
     }
 
+    /* Tally modal responsive en mobile */
+    @media (max-width: 768px) {
+      iframe[data-tally-src],
+      div[class*="tally-form"] iframe {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      /* Asegurar que el contenedor del modal tenga padding correcto en mobile */
+      div[class*="tally-popup"],
+      div[class*="tally-modal"] {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+      }
+    }
 
   </style>
 </head>
@@ -2832,23 +2849,34 @@
     // ============================================================
     const TALLY_FORM_ID = '68ryP5';
 
-    // Conecta todos los botones con data-action="open-form" al modal de Tally
-    document.querySelectorAll('[data-action="open-form"]').forEach(btn => {
-      btn.setAttribute('data-tally-open', TALLY_FORM_ID);
-      btn.setAttribute('data-tally-layout', 'modal');
-      btn.setAttribute('data-tally-width', '700');
-      btn.setAttribute('data-tally-overlay', '1');
-      btn.setAttribute('data-tally-emoji-text', '👋');
-      btn.setAttribute('data-tally-emoji-animation', 'wave');
-      btn.setAttribute('data-tally-auto-close', '3000');
+    // Función para configurar Tally con ancho responsive
+    function configureTallyWidth() {
+      const isMobile = window.innerWidth <= 768;
+      document.querySelectorAll('[data-action="open-form"]').forEach(btn => {
+        btn.setAttribute('data-tally-open', TALLY_FORM_ID);
+        btn.setAttribute('data-tally-layout', 'modal');
+        btn.setAttribute('data-tally-width', isMobile ? '100%' : '700');
+        btn.setAttribute('data-tally-overlay', '1');
+        btn.setAttribute('data-tally-emoji-text', '👋');
+        btn.setAttribute('data-tally-emoji-animation', 'wave');
+        btn.setAttribute('data-tally-auto-close', '3000');
 
-      // Si Tally no está configurado todavía, mostrar mailto como fallback
-      btn.addEventListener('click', function (e) {
-        if (TALLY_FORM_ID === 'TU_FORM_ID') {
-          e.preventDefault();
-          window.location.href = 'mailto:hola@bannerblaze.com?subject=Quiero%20comenzar%20con%20BannerBlaze';
-        }
+        // Si Tally no está configurado todavía, mostrar mailto como fallback
+        btn.addEventListener('click', function (e) {
+          if (TALLY_FORM_ID === 'TU_FORM_ID') {
+            e.preventDefault();
+            window.location.href = 'mailto:hola@bannerblaze.com?subject=Quiero%20comenzar%20con%20BannerBlaze';
+          }
+        });
       });
+    }
+
+    // Configurar Tally al cargar la página
+    configureTallyWidth();
+
+    // Reajustar ancho de Tally si el usuario cambia el tamaño de la ventana
+    window.addEventListener('resize', () => {
+      configureTallyWidth();
     });
 
     // Manejo de links "Próximamente" (Sobre nosotros, Manifiesto)
