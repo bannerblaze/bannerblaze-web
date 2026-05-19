@@ -862,6 +862,66 @@
       }
     }
 
+    /* Mobile (<768px): Hide visual, adjust text hierarchy */
+    @media (max-width: 768px) {
+      /* Ocultar la pantalla virtual en mobile */
+      .hero-visual {
+        display: none;
+      }
+
+      /* Volver el hero a una sola columna */
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      /* Eyebrow más compacto */
+      .hero .eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+      }
+
+      /* Titular ajustado para mobile */
+      .hero h1 {
+        font-size: clamp(2.4rem, 12vw, 3.8rem);
+        margin: 20px 0 28px;
+        line-height: 0.95;
+      }
+
+      /* Párrafo más compacto */
+      .hero-sub {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 32px;
+        padding-left: 16px;
+      }
+
+      /* Botones CTA en columna en mobile */
+      .hero-cta {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 32px;
+      }
+
+      .hero-cta .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Micro-texto más pequeño en mobile */
+      .hero-micro {
+        font-size: 0.8rem;
+        line-height: 1.5;
+      }
+
+      /* Reducir padding del hero en mobile */
+      .hero {
+        padding-top: 100px;
+        padding-bottom: 60px;
+        min-height: auto;
+      }
+    }
+
     @media (max-width: 540px) {
       .hero-visual {
         max-width: 100%;
