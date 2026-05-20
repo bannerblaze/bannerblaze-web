@@ -472,15 +472,29 @@
       box-shadow: 0 0 0 1px rgba(184,235,35,0.12), 0 24px 48px -16px rgba(0,0,0,0.5);
     }
     .tech-icon {
-      width: 48px; height: 48px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(184,235,35,0.2);
+      width: 160px; height: 52px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--radius-sm);
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 20px;
-      font-family: var(--display);
-      font-size: 1.4rem;
-      color: var(--accent);
+      padding: 10px 16px;
+      overflow: hidden;
+    }
+    .tech-icon img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      filter: grayscale(100%) brightness(1.2);
+      opacity: 0.55;
+      transition: filter 0.3s ease, opacity 0.3s ease;
+    }
+    .tech-card:hover .tech-icon img {
+      filter: grayscale(0%) brightness(1);
+      opacity: 1;
     }
     .tech-card-name {
       font-family: var(--body);
@@ -874,7 +888,9 @@
         <div class="tech-grid reveal-stagger">
           <!-- OpenAI -->
           <div class="glass tech-card">
-            <div class="tech-icon">O</div>
+            <div class="tech-icon">
+              <img src="logos/logo-openai.png" alt="OpenAI" loading="lazy" />
+            </div>
             <p class="tech-card-name">OpenAI · GPT</p>
             <h3>Generación de contenido</h3>
             <p>Generación y verificación de contenido publicitario con los modelos de lenguaje más avanzados del mundo.</p>
@@ -883,9 +899,7 @@
           <!-- Anthropic / Claude -->
           <div class="glass tech-card">
             <div class="tech-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px;">
-                <path d="M12 2L14.5 9H22L16 13.5L18.5 21L12 16.5L5.5 21L8 13.5L2 9H9.5L12 2Z"/>
-              </svg>
+              <img src="logos/logo-claude.png" alt="Claude (Anthropic)" loading="lazy" />
             </div>
             <p class="tech-card-name">Anthropic · Claude</p>
             <h3>Análisis de veracidad</h3>
@@ -895,12 +909,7 @@
           <!-- Perplexity -->
           <div class="glass tech-card">
             <div class="tech-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px;">
-                <polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/>
-                <line x1="12" y1="2" x2="12" y2="22"/>
-                <line x1="2" y1="8.5" x2="22" y2="8.5"/>
-                <line x1="2" y1="15.5" x2="22" y2="15.5"/>
-              </svg>
+              <img src="logos/logo-perplexity.png" alt="Perplexity" loading="lazy" />
             </div>
             <p class="tech-card-name">Perplexity</p>
             <h3>Validación en tiempo real</h3>
@@ -910,9 +919,7 @@
           <!-- Gemini -->
           <div class="glass tech-card">
             <div class="tech-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px;">
-                <path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2L12 1Z"/>
-              </svg>
+              <img src="logos/logo-gemini.png" alt="Google Gemini" loading="lazy" />
             </div>
             <p class="tech-card-name">Google · Gemini</p>
             <h3>Procesamiento multimodal</h3>
