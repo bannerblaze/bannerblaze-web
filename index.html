@@ -537,27 +537,51 @@
     }
 
     /* ==========================================================
-       IMAGEN HERO — Billboard real con efectos de integración
+       HERO — 2 imágenes en grid vertical con efectos
        ========================================================== */
 
-    .hero-image-wrap {
-      position: relative;
+    .hero-imgs-grid {
       width: 100%;
-      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-img-wrap {
+      position: relative;
+      border-radius: 16px;
       overflow: hidden;
-      /* Sombra sutil que refuerza la profundidad */
       box-shadow:
-        0 32px 64px -16px rgba(0, 0, 0, 0.8),
+        0 20px 48px -12px rgba(0, 0, 0, 0.8),
         0 0 0 1px rgba(255, 255, 255, 0.04);
     }
 
-    .hero-billboard-img {
+    /* Imagen de arriba: más grande (60% del espacio) */
+    .hero-img-top {
+      flex: 1.2;
+    }
+
+    /* Imagen de abajo: más pequeña (40% del espacio) */
+    .hero-img-bottom {
+      flex: 0.8;
+    }
+
+    .hero-img {
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
       object-fit: cover;
-      /* Animación de entrada sutil */
       animation: imgReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both;
+    }
+
+    .hero-img-top .hero-img {
+      animation-delay: 0.3s;
+      max-height: 280px;
+    }
+
+    .hero-img-bottom .hero-img {
+      animation-delay: 0.5s;
+      max-height: 220px;
     }
 
     @keyframes imgReveal {
@@ -565,31 +589,45 @@
       to   { opacity: 1; transform: scale(1); }
     }
 
-    /* Fade izquierda — se funde con el negro del fondo */
+    /* Fade izquierda — se funde con el negro del texto */
     .hero-img-fade-left {
       position: absolute;
       top: 0; left: 0; bottom: 0;
-      width: 35%;
+      width: 30%;
       background: linear-gradient(
         to right,
         #050505 0%,
-        rgba(5, 5, 5, 0.85) 30%,
-        rgba(5, 5, 5, 0.4) 60%,
+        rgba(5, 5, 5, 0.7) 40%,
         transparent 100%
       );
       pointer-events: none;
       z-index: 2;
     }
 
-    /* Fade inferior — integración suave con el resto del sitio */
+    /* Fade inferior — imagen de arriba */
     .hero-img-fade-bottom {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 35%;
+      height: 40%;
       background: linear-gradient(
         to top,
         #050505 0%,
-        rgba(5, 5, 5, 0.7) 40%,
+        rgba(5, 5, 5, 0.6) 50%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Fade superior — imagen de abajo */
+    .hero-img-fade-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(
+        to bottom,
+        #050505 0%,
+        rgba(5, 5, 5, 0.6) 50%,
         transparent 100%
       );
       pointer-events: none;
@@ -962,12 +1000,11 @@
         grid-template-columns: 0.95fr 1.15fr;
         gap: 32px;
       }
-      .hero-image-wrap {
-        border-radius: 14px;
-      }
+      .hero-img-top .hero-img { max-height: 200px; }
+      .hero-img-bottom .hero-img { max-height: 160px; }
     }
 
-    /* Mobile (<768px): mostrar imagen debajo del texto */
+    /* Mobile (<768px): apilar imágenes debajo del texto */
     @media (max-width: 768px) {
       .hero-visual {
         display: block;
@@ -975,14 +1012,22 @@
         margin-top: 32px;
       }
 
-      .hero-image-wrap {
-        border-radius: 14px;
+      .hero-imgs-grid {
+        flex-direction: row;
+        height: 220px;
       }
 
-      /* En mobile ocultamos el fade izquierda porque no hay texto al lado */
-      .hero-img-fade-left {
-        display: none;
+      .hero-img-wrap {
+        border-radius: 12px;
       }
+
+      .hero-img-top .hero-img,
+      .hero-img-bottom .hero-img {
+        max-height: 220px;
+      }
+
+      /* En mobile ocultamos el fade izquierda */
+      .hero-img-fade-left { display: none; }
 
       /* Volver el hero a una sola columna */
       .hero-grid {
@@ -990,20 +1035,17 @@
         gap: 0;
       }
 
-      /* Eyebrow más compacto */
       .hero .eyebrow {
         font-size: 0.7rem;
         letter-spacing: 0.15em;
       }
 
-      /* Titular ajustado para mobile */
       .hero h1 {
         font-size: clamp(2.4rem, 12vw, 3.8rem);
         margin: 20px 0 28px;
         line-height: 0.95;
       }
 
-      /* Párrafo más compacto */
       .hero-sub {
         font-size: 1rem;
         line-height: 1.5;
@@ -1011,7 +1053,6 @@
         padding-left: 16px;
       }
 
-      /* Botones CTA en columna en mobile */
       .hero-cta {
         flex-direction: column;
         width: 100%;
@@ -1023,13 +1064,11 @@
         justify-content: center;
       }
 
-      /* Micro-texto más pequeño en mobile */
       .hero-micro {
         font-size: 0.8rem;
         line-height: 1.5;
       }
 
-      /* Reducir padding del hero en mobile */
       .hero {
         padding-top: 100px;
         padding-bottom: 60px;
@@ -2587,17 +2626,29 @@
         </div>
 
         <div class="hero-visual">
-          <div class="hero-image-wrap">
-            <img
-              src="hero-billboard.jpg"
-              alt="Pantalla LED BannerBlaze en Medellín — TU MARCA AQUÍ HOY MISMO"
-              class="hero-billboard-img"
-              loading="eager"
-            />
-            <!-- Fade izquierda: integra con el fondo negro del hero -->
-            <div class="hero-img-fade-left"></div>
-            <!-- Fade inferior: evita el corte con el resto del sitio -->
-            <div class="hero-img-fade-bottom"></div>
+          <div class="hero-imgs-grid">
+            <!-- Imagen 1: Calle nocturna -->
+            <div class="hero-img-wrap hero-img-top">
+              <img
+                src="hero-calle.jpg"
+                alt="Pantalla BannerBlaze en calle nocturna de Medellín"
+                class="hero-img"
+                loading="eager"
+              />
+              <div class="hero-img-fade-left"></div>
+              <div class="hero-img-fade-bottom"></div>
+            </div>
+            <!-- Imagen 2: Centro comercial -->
+            <div class="hero-img-wrap hero-img-bottom">
+              <img
+                src="hero-mall.jpg"
+                alt="Pantalla BannerBlaze en centro comercial"
+                class="hero-img"
+                loading="eager"
+              />
+              <div class="hero-img-fade-left"></div>
+              <div class="hero-img-fade-top"></div>
+            </div>
           </div>
         </div>
       </div>
