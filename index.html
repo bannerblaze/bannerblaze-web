@@ -2333,27 +2333,30 @@
 
   .logo-item {
     flex-shrink: 0;
-    width: 180px;
-    height: 50px;
+    width: 200px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-mute);
-    opacity: 0.5;
-    transition: opacity 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    opacity: 0.55;
+    filter: grayscale(100%) brightness(1.1);
+    transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
     cursor: pointer;
   }
 
   .logo-item:hover {
     opacity: 1;
-    color: var(--accent);
+    filter: grayscale(0%) brightness(1);
     transform: scale(1.05);
   }
 
-  .logo-item svg {
-    width: 100%;
-    height: 100%;
+  .logo-item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     display: block;
+    object-fit: contain;
   }
 
   /* Responsive */
@@ -2376,10 +2379,7 @@
     }
     .logo-item {
       width: 140px;
-      height: 40px;
-    }
-    .logo-item svg text {
-      font-size: 18px;
+      height: 50px;
     }
   }
 
@@ -2555,46 +2555,30 @@
           <div class="logo-marquee-track">
             <!-- Primera serie -->
             <div class="logo-item">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg" aria-label="OpenAI">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">OpenAI</text>
-              </svg>
+              <img src="logos/logo-openai.png" alt="OpenAI" loading="lazy" />
             </div>
             <div class="logo-item">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg" aria-label="Anthropic Claude">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">Claude</text>
-              </svg>
+              <img src="logos/logo-claude.png" alt="Claude (Anthropic)" loading="lazy" />
             </div>
             <div class="logo-item">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg" aria-label="Perplexity">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">Perplexity</text>
-              </svg>
+              <img src="logos/logo-perplexity.png" alt="Perplexity" loading="lazy" />
             </div>
             <div class="logo-item">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg" aria-label="Google Gemini">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">Gemini</text>
-              </svg>
+              <img src="logos/logo-gemini.png" alt="Google Gemini" loading="lazy" />
             </div>
 
-            <!-- Segunda serie (duplicada para loop infinito) -->
+            <!-- Segunda serie duplicada para loop infinito -->
             <div class="logo-item" aria-hidden="true">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">OpenAI</text>
-              </svg>
+              <img src="logos/logo-openai.png" alt="" loading="lazy" />
             </div>
             <div class="logo-item" aria-hidden="true">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">Claude</text>
-              </svg>
+              <img src="logos/logo-claude.png" alt="" loading="lazy" />
             </div>
             <div class="logo-item" aria-hidden="true">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">Perplexity</text>
-              </svg>
+              <img src="logos/logo-perplexity.png" alt="" loading="lazy" />
             </div>
             <div class="logo-item" aria-hidden="true">
-              <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="currentColor">Gemini</text>
-              </svg>
+              <img src="logos/logo-gemini.png" alt="" loading="lazy" />
             </div>
           </div>
         </div>
