@@ -404,8 +404,8 @@ footer {
    HERO SECTION
    ============================================================ */
 .plat-hero {
-  padding-top: calc(var(--section-pad) + 80px);
-  padding-bottom: var(--section-pad);
+  padding-top: 140px;
+  padding-bottom: clamp(60px, 8vw, 100px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
@@ -450,7 +450,8 @@ footer {
   .plat-hero {
     grid-template-columns: 1fr;
     gap: 48px;
-    padding-top: calc(var(--section-pad) + 60px);
+    padding-top: 110px;
+    padding-bottom: 60px;
   }
   .plat-hero-visual { aspect-ratio: 16 / 10; }
 }
@@ -734,6 +735,8 @@ footer {
   text-align: center;
   position: relative;
   overflow: hidden;
+  padding: clamp(80px, 10vw, 140px) 0 clamp(80px, 10vw, 120px);
+  margin-bottom: 0;
 }
 
 .cta-glow {
