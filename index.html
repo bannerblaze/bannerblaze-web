@@ -2495,9 +2495,9 @@
   .logo-marquee-track {
     display: flex;
     align-items: center;
-    gap: 100px;
+    gap: 60px;
     width: max-content;
-    animation: scrollLogos 25s linear infinite;
+    animation: scrollLogos 35s linear infinite;
   }
 
   @keyframes scrollLogos {
@@ -2510,8 +2510,8 @@
   }
 
   .logo-item {
-    width: 280px;
-    height: 100px;
+    width: 560px;
+    height: 220px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -2529,10 +2529,9 @@
   }
 
   .logo-item img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
+    width: 100%;
     height: auto;
+    max-width: none;
     display: block;
     object-fit: contain;
   }
@@ -2559,11 +2558,13 @@
       animation-duration: 18s;
     }
     .logo-item {
-      width: 160px;
-      height: 56px;
+      width: 280px;
+      height: 110px;
     }
     .logo-item img {
-      max-height: 44px;
+      width: 100%;
+      height: auto;
+      max-width: none;
     }
   }
 
